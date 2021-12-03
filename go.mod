@@ -8,10 +8,9 @@ require (
 	github.com/Shopify/sarama v1.30.0 // indirect
 	github.com/Shopify/toxiproxy v2.1.4+incompatible // indirect
 	github.com/astaxie/beego v1.12.3
+	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible // indirect
 	github.com/siddontang/go v0.0.0-20170517070808-cb568a3e5cc0
 	golang.org/x/net v0.0.0-20210917221730-978cfadd31cf
 )
 
-replace (
-	github.com/HappyTeemo7569/teemoKit  => ./../teemoKit 
-)
+replace github.com/HappyTeemo7569/teemoKit => ./../teemoKit

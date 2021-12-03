@@ -2,12 +2,17 @@ package main
 
 import (
 	"github.com/HappyTeemo7569/teemoKit/tlog"
-	"kafkaDemo/producer"
+	"kafkaDemo/consumer"
+	"time"
 )
 
 func main() {
 	tlog.Info("开始")
 
-	producer.Put()
+	//go producer.Put()
+	go consumer.Get(1)
 
+	for {
+		time.Sleep(time.Hour * 60)
+	}
 }
