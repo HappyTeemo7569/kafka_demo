@@ -13,3 +13,5 @@ temp/
 .DS_Store
 public/devtool/
 .idea/
+conf/app.conf
+log

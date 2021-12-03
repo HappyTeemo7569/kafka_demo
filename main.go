@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	tlog.Info(11)
+	tlog.Info("开始")
 
 	producer.Put()
 
