@@ -11,3 +11,7 @@ require (
 	github.com/siddontang/go v0.0.0-20170517070808-cb568a3e5cc0
 	golang.org/x/net v0.0.0-20210917221730-978cfadd31cf
 )
+
+replace (
+	github.com/HappyTeemo7569/teemoKit  => ./../teemoKit 
+)

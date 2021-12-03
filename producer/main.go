@@ -13,6 +13,8 @@ func Put() {
 	config.Producer.Partitioner = sarama.NewRandomPartitioner // 新选出一个partition
 	config.Producer.Return.Successes = true                   // 成功交付的消息将在success channel返回
 
+	//server_add :=
+
 	// 连接kafka
 	client, err := sarama.NewSyncProducer([]string{"47.98.135.76:8677"}, config)
 	if err != nil {
