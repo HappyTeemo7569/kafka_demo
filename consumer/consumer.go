@@ -12,8 +12,6 @@ type Consumer struct {
 	ConsumerId int //消费者Id
 }
 
-var ConsumerId = 1
-
 func (c *Consumer) InitConsumer() error {
 	consumer, err := sarama.NewConsumer([]string{define.SERVER_LIST}, nil)
 	if err != nil {
@@ -35,6 +33,7 @@ func (c *Consumer) GetMessage(partitionId int32, offset int64) {
 	pc, err := c.Consumer.ConsumePartition(c.Topic, partitionId, offset)
 	if err != nil {
 		tlog.Error("failed to start consumer for partition %d,err:%v", partitionId, err)
+		//That topic/partition is already being consumed
 		return
 	}
 
@@ -53,7 +52,7 @@ func (c *Consumer) GetMessageToAll(offset int64) {
 		tlog.Error("fail to get list of partition:err%v", err)
 		return
 	}
-	tlog.Info("所有partition:" + string(partitionList))
+	tlog.Info("所有partition:", partitionList)
 
 	for partition := range partitionList { // 遍历所有的分区
 		c.GetMessage(int32(partition), offset)
