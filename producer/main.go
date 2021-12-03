@@ -36,7 +36,7 @@ func Put() {
 			fmt.Println("send msg failed, err:", err)
 			return
 		}
-		tlog.Info("pid:%v offset:%v msg:%s \n", pid, offset, txt)
+		tlog.Info("pid:%v offset:%v msg:%s", pid, offset, txt)
 
 		index++
 	}

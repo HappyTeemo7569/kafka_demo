@@ -1,41 +1,26 @@
 package consumer
 
 import (
-	"fmt"
 	"github.com/HappyTeemo7569/teemoKit/tlog"
-	"github.com/Shopify/sarama"
-	"kafkaDemo/define"
 )
 
-func Get(ConsumerId int) {
-	consumer, err := sarama.NewConsumer([]string{define.SERVER_LIST}, nil)
-	if err != nil {
-		tlog.Error("fail to start consumer, err:%v\n", err)
-		return
-	}
-	partitionList, err := consumer.Partitions(define.TOPIC) // 根据topic取到所有的分区
-	if err != nil {
-		tlog.Error("fail to get list of partition:err%v\n", err)
-		return
-	}
-	fmt.Println(string(partitionList))
+//传入消费者数量
+func Get(consumerNum int) {
 
-	//partition := 0
-	//sarama.OffsetNewest
+	offest := int64(0)
 
-	for partition := range partitionList { // 遍历所有的分区
-		// 针对每个分区创建一个对应的分区消费者
-		pc, err := consumer.ConsumePartition(define.TOPIC, int32(partition), 1)
+	//直接创建多个消费者
+	for i := 0; i < consumerNum; i++ {
+		consumer := new(Consumer)
+		err := consumer.InitConsumer()
 		if err != nil {
-			tlog.Error("failed to start consumer for partition %d,err:%v\n", partition, err)
+			tlog.Error("fail to init consumer, err:%v", err)
 			return
 		}
-		defer pc.AsyncClose()
-		// 异步从每个分区消费信息
-		go func(sarama.PartitionConsumer) {
-			for msg := range pc.Messages() {
-				tlog.Info("ConsumerId:%d Partition:%d Offset:%d Key:%v Value:%v \n", ConsumerId, msg.Partition, msg.Offset, msg.Key, string(msg.Value))
-			}
-		}(pc)
+		consumer.GetMessageToAll(offest)
 	}
+	//这样会带来重复消费
+
+	//下面试试多个partition
+
 }
