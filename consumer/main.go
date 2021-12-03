@@ -1,5 +1,7 @@
 package consumer
 
+import "github.com/HappyTeemo7569/teemoKit/tlog"
+
 //传入消费者数量
 func Get(consumerNum int) {
 
@@ -31,5 +33,14 @@ func Get(consumerNum int) {
 	*/
 
 	//下面试试多个partition
+	for i := 0; i < consumerNum; i++ {
+		consumer := new(Consumer3)
+		err := consumer.InitConsumer()
+		if err != nil {
+			tlog.Error("fail to init consumer, err:%v", err)
+			return
+		}
+		go consumer.GetMessageToAll()
+	}
 
 }
