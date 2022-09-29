@@ -73,7 +73,7 @@ services:
       #- ./kafka:/bitnami/kafka
     depends_on:
       - zookeeper
-  # Web 管理界面 另外也可以用exporter+prometheus+grafana的方式来监控 https://github.com/danielqsj/kafka_exporter
+  # Web 管理界面 （用KnowStreaming可以不用下面的）
   kafka_manager:
     image: 'hlebalbau/kafka-manager:latest'
     ports:
@@ -160,7 +160,7 @@ services:
       - zookeeper
 ```
 
-## 管理工具
+## 管理工具 KnowStreaming
 管理工具：
 
 [https://github.com/didi/KnowStreaming/blob/master/docs/install_guide/单机部署手册.md](https://github.com/didi/KnowStreaming/blob/master/docs/install_guide/%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C.md)
