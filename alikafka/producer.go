@@ -22,6 +22,7 @@ func GetFullPath(file string) string {
 	return fullPath
 }
 
+// 生产者 消费者其实是一样的 主要是连接加上鉴权
 func newSyncProducer() (sarama.SyncProducer, error) {
 	config := sarama.NewConfig()
 	// 等待服务器所有副本都保存成功后的响应

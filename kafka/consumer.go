@@ -13,7 +13,7 @@ type KafkaConsumer struct {
 	MessageQueue chan []byte
 }
 
-//获取所有分区
+// 获取所有分区
 func (c *KafkaConsumer) Consume() {
 	config := sarama.NewConfig()
 	consumer, err := sarama.NewConsumer(c.Node, config)
@@ -27,6 +27,7 @@ func (c *KafkaConsumer) Consume() {
 	if err != nil {
 		log.Fatal("Partitions err: ", err)
 	}
+
 	var wg sync.WaitGroup
 	wg.Add(len(partitions))
 	// 然后每个分区开一个 goroutine 来消费
@@ -39,7 +40,11 @@ func (c *KafkaConsumer) Consume() {
 
 func (c *KafkaConsumer) consumeByPartition(consumer sarama.Consumer, topic string, partitionId int32, wg *sync.WaitGroup) {
 	defer wg.Done()
-	partitionConsumer, err := consumer.ConsumePartition(topic, partitionId, sarama.OffsetNewest)
+
+	//添加存储offset
+	offset := getConsumeOffset(topic, partitionId)
+
+	partitionConsumer, err := consumer.ConsumePartition(topic, partitionId, offset)
 	if err != nil {
 		log.Fatal("ConsumePartition err: ", err)
 	}
